@@ -1,0 +1,2005 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabay sa C Programming</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            padding: 1%;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 1%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        h1 {
+            font-size: 1.3em;
+            color: #ffd700;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            text-align: center;
+            font-size: 0.85em;
+            color: #e0e0e0;
+            margin-top: 5px;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            padding: 5px 0;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 12px 8px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .tab-btn.active {
+            background: #ffd700;
+            color: #1e3c72;
+            font-weight: bold;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .content-section {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 15px 1%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            font-size: 1.2em;
+            color: #1e3c72;
+            margin: 15px 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #ffd700;
+        }
+        
+        h3 {
+            font-size: 1em;
+            color: #2a5298;
+            margin: 12px 0 8px 0;
+        }
+        
+        p {
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 12px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            border-left: 4px solid #ffd700;
+        }
+        
+        .highlight {
+            background: #fffacd;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+        
+        .tip-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 5px;
+        }
+        
+        .lesson-card {
+            background: #f5f5f5;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .lesson-card:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+            border-color: #2196f3;
+        }
+        
+        .lesson-number {
+            display: inline-block;
+            background: #ffd700;
+            color: #1e3c72;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        ul {
+            margin: 10px 0 10px 20px;
+        }
+        
+        li {
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.85em;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #ffd700;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .step-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 5px;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #2196f3;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .output-box {
+            background: #f0f0f0;
+            border-left: 4px solid #4caf50;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .info-box {
+            background: #e1f5fe;
+            border-left: 4px solid #03a9f4;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🇵🇭 Gabay sa C Programming</h1>
+            <p class="tagline">Para sa mga Baguhan - Matuto ng C sa Filipino</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </header>
+        
+        <div class="nav-tabs" id="navTabs">
+            <button class="tab-btn active" data-tab="intro">Simula</button>
+            <button class="tab-btn" data-tab="basics">Basics</button>
+            <button class="tab-btn" data-tab="control">Control Flow</button>
+            <button class="tab-btn" data-tab="functions">Functions</button>
+            <button class="tab-btn" data-tab="arrays">Arrays</button>
+            <button class="tab-btn" data-tab="pointers">Pointers</button>
+            <button class="tab-btn" data-tab="structures">Structures</button>
+            <button class="tab-btn" data-tab="files">Files</button>
+            <button class="tab-btn" data-tab="projects">Projects</button>
+        </div>
+        
+        <!-- Intro Section -->
+        <div id="intro" class="content-section active">
+            <h2>🎓 Maligayang Pagdating!</h2>
+            <p>Kamusta! Welcome sa komprehensibong gabay sa C Programming na specially designed para sa mga Filipino beginners. Dito matututunan mo ang fundamentals ng C programming language mula simula.</p>
+            
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> Ang C programming ay foundation ng maraming modern programming languages. Master mo ito, madali na ang iba!
+            </div>
+            
+            <h3>Bakit C Programming?</h3>
+            <ul>
+                <li>Fast at efficient - mabilis mag-execute ang programs</li>
+                <li>Foundation ng maraming languages (C++, Java, Python)</li>
+                <li>Widely used sa system programming at embedded systems</li>
+                <li>Magandang starting point para sa programming career</li>
+                <li>Low-level access sa memory at hardware</li>
+                <li>Portable - pwedeng i-run sa iba't ibang platforms</li>
+            </ul>
+            
+            <h3>Ano ang Kakailanganing mo?</h3>
+            <ul>
+                <li>Computer o laptop (Windows, Mac, o Linux)</li>
+                <li>C Compiler (GCC, MinGW, o Code::Blocks)</li>
+                <li>Text Editor o IDE (VS Code, Code::Blocks, Dev-C++)</li>
+                <li>Patience at dedication sa pag-aaral</li>
+                <li>Internet connection para sa research</li>
+            </ul>
+            
+            <h3>Step-by-Step Setup Guide</h3>
+            
+            <div class="step-box">
+                <span class="step-number">1</span>
+                <strong>Download IDE/Compiler</strong>
+                <p>Para sa Windows: Download Code::Blocks with MinGW from codeblocks.org. Piliin ang version na may bundled MinGW compiler (codeblocks-XX.XX-mingw-setup.exe).</p>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">2</span>
+                <strong>Install ang Program</strong>
+                <p>Run ang installer at follow ang instructions. I-click ang "Next" at default settings ay okay na. Maghintay ng 2-5 minutes para sa installation.</p>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">3</span>
+                <strong>Open Code::Blocks</strong>
+                <p>After installation, buksan ang Code::Blocks application. First time mo, tatanungin ka about compiler settings - i-click lang "OK".</p>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">4</span>
+                <strong>Create New Project</strong>
+                <p>File → New → Project → Console Application → Click "Go" → Select "C" → Lagay ng project name at location → Finish</p>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">5</span>
+                <strong>Write Your First Program</strong>
+                <p>Sa main.c file, makikita mo ang default code. Pwede mo itong i-modify o mag-type ng bagong code (makikita sa Basics section).</p>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">6</span>
+                <strong>Build and Run</strong>
+                <p>Press F9 o click yung yellow gear icon na may green arrow (Build and Run button). Makikita mo ang output sa console window!</p>
+            </div>
+            
+            <div class="info-box">
+                <strong>📝 Important Notes:</strong><br>
+                • Save your work regularly (Ctrl+S)<br>
+                • Kung may error, basahin ang error messages sa Build Log<br>
+                • Practice typing code manually - huwag copy-paste lang<br>
+                • Mag-experiment at huwag matakot mag-error!
+            </div>
+            
+            <h3>Common Errors at Solutions</h3>
+            
+            <div class="warning-box">
+                <strong>Error: "Compiler not found"</strong><br>
+                Solution: I-download ang MinGW o i-install ulit ang Code::Blocks with compiler bundle.
+            </div>
+            
+            <div class="warning-box">
+                <strong>Error: "undefined reference to main"</strong><br>
+                Solution: Siguraduhing may main() function sa code mo.
+            </div>
+            
+            <div class="lesson-card">
+                <span class="lesson-number">Aralin 1</span>
+                <strong>Pag-install ng Compiler</strong>
+                <p>I-download at i-install ang GCC compiler para sa iyong operating system. Para sa Mac, use Xcode Command Line Tools. Para sa Linux, use apt-get install gcc.</p>
+            </div>
+            
+            <div class="lesson-card">
+                <span class="lesson-number">Aralin 2</span>
+                <strong>Hello World Program</strong>
+                <p>Gumawa ng iyong unang C program - ang classic "Hello World"! Ito ang tradition sa programming world.</p>
+            </div>
+            
+            <div class="lesson-card">
+                <span class="lesson-number">Aralin 3</span>
+                <strong>Understanding Compilation</strong>
+                <p>Alamin kung paano nag-convert ang compiler ng source code (.c file) to executable program (.exe file).</p>
+            </div>
+        </div>
+        
+        <!-- Basics Section -->
+        <div id="basics" class="content-section">
+            <h2>📚 C Programming Basics</h2>
+            
+            <h3>Unang Program: Hello World</h3>
+            <p>Ito ang pinakasimpleng program sa C - ang traditional first program ng lahat ng programmers!</p>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Hello, World!\n");
+    return 0;
+}</div>
+            
+            <div class="tip-box">
+                <strong>Paliwanag line-by-line:</strong><br>
+                • <span class="highlight">#include &lt;stdio.h&gt;</span> - naglo-load ng standard input/output library para magamit ang printf()<br>
+                • <span class="highlight">int main()</span> - main function, dito nagsisimula ang program execution<br>
+                • <span class="highlight">printf()</span> - function para mag-print/display sa screen<br>
+                • <span class="highlight">\n</span> - newline character, para lumipat sa bagong line<br>
+                • <span class="highlight">return 0</span> - sinasabi na successful ang program (0 = no errors)
+            </div>
+            
+            <h3>Step-by-Step: Gumawa ng Hello World</h3>
+            
+            <div class="step-box">
+                <span class="step-number">1</span>
+                <strong>Buksan ang Text Editor</strong>
+                <p>Open ang Code::Blocks o any text editor mo. Create new file (File → New → Empty File).</p>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">2</span>
+                <strong>Type ang Header</strong>
+                <p>Magsimula sa #include &lt;stdio.h&gt; - ito ay library para sa input/output functions. Palaging nasa top ng file ito.</p>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">3</span>
+                <strong>Create Main Function</strong>
+                <p>Type: int main() { } - lahat ng code ay nasa loob ng curly braces. Ito ang entry point ng program.</p>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">4</span>
+                <strong>Add Printf Statement</strong>
+                <p>Sa loob ng main, type: printf("Hello, World!\n"); - Huwag kalimutan ang semicolon (;) sa dulo!</p>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">5</span>
+                <strong>Return Statement</strong>
+                <p>Lagay ang return 0; para sabihin na successful ang program. Ito ay standard practice.</p>
+            </div>
+            
+            <div class="step-box">
+                <span class="step-number">6</span>
+                <strong>Save at Compile</strong>
+                <p>Save as hello.c (importante ang .c extension) at compile using F9 or Build and Run button.</p>
+            </div>
+            
+            <div class="output-box">
+                <strong>Expected Output:</strong><br>
+                Hello, World!
+            </div>
+            
+            <h3>Variables at Data Types</h3>
+            <p>Ang variables ay parang containers o boxes na nag-store ng data. Kailangan natin i-declare ang type bago gamitin.</p>
+            
+            <div class="code-block">// Integer (buong numero) - walang decimal
+int edad = 25;
+int taon = 2025;
+int bilang = -10;  // pwede negative
+
+// Float (decimal numbers) - 6-7 decimal precision
+float height = 5.7;
+float grado = 95.5;
+float temperature = 36.6;
+
+// Double (mas precise na decimal) - 15-16 decimal precision
+double pi = 3.14159265359;
+double salary = 50000.75;
+
+// Character (isang letter o symbol)
+char grade = 'A';
+char initial = 'J';
+char symbol = '@';
+
+// String (salita o pangungusap) - array of characters
+char pangalan[] = "Juan";
+char address[] = "Manila, Philippines";
+char email[] = "juan@email.com";</div>
+            
+            <div class="info-box">
+                <strong>Memory Sizes:</strong><br>
+                • char: 1 byte (8 bits)<br>
+                • int: 4 bytes (32 bits) - range: -2 billion to +2 billion<br>
+                • float: 4 bytes - 6-7 decimal digits precision<br>
+                • double: 8 bytes - 15-16 decimal digits precision
+            </div>
+            
+            <h3>Step-by-Step: Variable Declaration Program</h3>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    // Step 1: Declare variables
+    int edad;
+    float height;
+    char initial;
+    
+    // Step 2: Assign values
+    edad = 18;
+    height = 5.6;
+    initial = 'M';
+    
+    // Step 3: Display values
+    printf("Edad: %d\n", edad);
+    printf("Height: %.1f feet\n", height);
+    printf("Initial: %c\n", initial);
+    
+    // Step 4: Declare and initialize in one line
+    int score = 95;
+    float average = 87.5;
+    
+    printf("Score: %d\n", score);
+    printf("Average: %.1f\n", average);
+    
+    return 0;
+}</div>
+            
+            <div class="output-box">
+                <strong>Output:</strong><br>
+                Edad: 18<br>
+                Height: 5.6 feet<br>
+                Initial: M<br>
+                Score: 95<br>
+                Average: 87.5
+            </div>
+            
+            <h3>Format Specifiers</h3>
+            <p>Ang format specifiers ay ginagamit sa printf() at scanf() para tukuyin ang data type:</p>
+            
+            <div class="info-box">
+                <strong>Common Format Specifiers:</strong><br>
+                • <span class="highlight">%d</span> - integer (decimal)<br>
+                • <span class="highlight">%f</span> - float/double<br>
+                • <span class="highlight">%.2f</span> - float with 2 decimal places<br>
+                • <span class="highlight">%c</span> - character<br>
+                • <span class="highlight">%s</span> - string<br>
+                • <span class="highlight">%ld</span> - long integer<br>
+                • <span class="highlight">%lf</span> - double (sa scanf)<br>
+                • <span class="highlight">%x</span> - hexadecimal<br>
+                • <span class="highlight">%o</span> - octal
+            </div>
+            
+            <h3>Printf at Scanf - Input/Output</h3>
+            <p>Ang printf() ay para mag-display, ang scanf() ay para mag-receive ng user input:</p>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    int edad;
+    char pangalan[50];
+    float height;
+    
+    // Get user input
+    printf("Ano ang iyong pangalan? ");
+    scanf("%s", pangalan);  // No & for strings
+    
+    printf("Ilang taon ka na? ");
+    scanf("%d", &edad);  // Use & for int, float, etc.
+    
+    printf("Gaano ka katangkad (feet)? ");
+    scanf("%f", &height);
+    
+    // Display with formatting
+    printf("\n=== YOUR INFO ===\n");
+    printf("Kumusta %s!\n", pangalan);
+    printf("Edad: %d taon\n", edad);
+    printf("Height: %.2f feet\n", height);
+    
+    return 0;
+}</div>
+            
+            <div class="warning-box">
+                <strong>⚠️ Important Scanf Rules:</strong><br>
+                • Gumamit ng <span class="highlight">&</span> (ampersand) before variable name para sa int, float, char<br>
+                • HUWAG gumamit ng & para sa strings/arrays<br>
+                • Gumamit ng tamang format specifier na match sa data type<br>
+                • Mag-ingat sa spaces - scanf() stops at whitespace for %s
+            </div>
+            
+            <h3>Arithmetic Operations</h3>
+            <p>Ang C ay may standard mathematical operators para sa calculations:</p>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 10, b = 3;
+    
+    int sum = a + b;        // 13 (addition)
+    int diff = a - b;       // 7 (subtraction)
+    int prod = a * b;       // 30 (multiplication)
+    int quot = a / b;       // 3 (integer division)
+    int mod = a % b;        // 1 (modulo/remainder)
+    
+    printf("a = %d, b = %d\n", a, b);
+    printf("Sum: %d\n", sum);
+    printf("Difference: %d\n", diff);
+    printf("Product: %d\n", prod);
+    printf("Quotient: %d\n", quot);
+    printf("Remainder: %d\n", mod);
+    
+    // Float division for exact result
+    float exact = (float)a / b;  // Type casting
+    printf("Exact division: %.2f\n", exact);
+    
+    return 0;
+}</div>
+            
+            <div class="output-box">
+                <strong>Output:</strong><br>
+                a = 10, b = 3<br>
+                Sum: 13<br>
+                Difference: 7<br>
+                Product: 30<br>
+                Quotient: 3<br>
+                Remainder: 1<br>
+                Exact division: 3.33
+            </div>
+            
+            <h3>Increment at Decrement Operators</h3>
+            <div class="code-block">int x = 5;
+
+x++;    // x = 6 (post-increment)
+++x;    // x = 7 (pre-increment)
+x--;    // x = 6 (post-decrement)
+--x;    // x = 5 (pre-decrement)
+
+// Shorthand operators
+x += 5;  // x = x + 5
+x -= 3;  // x = x - 3
+x *= 2;  // x = x * 2
+x /= 4;  // x = x / 4
+x %= 3;  // x = x % 3</div>
+            
+            <h3>Step-by-Step: Simple Calculator</h3>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    // Step 1: Declare variables
+    float num1, num2, result;
+    char operator;
+    
+    // Step 2: Get first number
+    printf("=== SIMPLE CALCULATOR ===\n");
+    printf("Enter first number: ");
+    scanf("%f", &num1);
+    
+    // Step 3: Get operator
+    printf("Enter operator (+, -, *, /): ");
+    scanf(" %c", &operator);  // Space before %c
+    
+    // Step 4: Get second number
+    printf("Enter second number: ");
+    scanf("%f", &num2);
+    
+    // Step 5: Perform calculation based on operator
+    if (operator == '+') {
+        result = num1 + num2;
+        printf("%.2f + %.2f = %.2f\n", num1, num2, result);
+    } else if (operator == '-') {
+        result = num1 - num2;
+        printf("%.2f - %.2f = %.2f\n", num1, num2, result);
+    } else if (operator == '*') {
+        result = num1 * num2;
+        printf("%.2f * %.2f = %.2f\n", num1, num2, result);
+    } else if (operator == '/') {
+        if (num2 != 0) {
+            result = num1 / num2;
+            printf("%.2f / %.2f = %.2f\n", num1, num2, result);
+        } else {
+            printf("Error: Cannot divide by zero!\n");
+        }
+    } else {
+        printf("Error: Invalid operator!\n");
+    }
+    
+    return 0;
+}</div>
+            
+            <h3>Constants - Values na Hindi Nagbabago</h3>
+            <p>Ang constants ay values na fixed at hindi pwedeng baguhin pagkatapos i-declare:</p>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+// Using #define (preprocessor directive)
+#define PI 3.14159
+#define TAX_RATE 0.12
+#define MAX_STUDENTS 50
+#define SCHOOL_NAME "Pinoy High School"
+
+int main() {
+    // Using const keyword
+    const int DAYS_IN_WEEK = 7;
+    const float SPEED_OF_LIGHT = 299792458.0;
+    
+    float radius = 5.0;
+    float area = PI * radius * radius;
+    
+    printf("Area of circle: %.2f\n", area);
+    printf("Tax rate: %.0f%%\n", TAX_RATE * 100);
+    printf("Max students: %d\n", MAX_STUDENTS);
+    
+    // PI = 3.14;  // ERROR! Cannot modify constant
+    
+    return 0;
+}</div>
+            
+            <div class="tip-box">
+                <strong>💡 Kapag Gumamit ng Constants:</strong><br>
+                • Use UPPERCASE names para madaling makita<br>
+                • Mas readable ang code at less errors<br>
+                • Madaling i-maintain - one place lang baguhin<br>
+                • Compiler optimization - mas mabilis ang execution
+            </div>
+            
+            <h3>Comments - Mga Paalala sa Code</h3>
+            <div class="code-block">// Single-line comment - hindi naba-basang compiler
+
+/*
+   Multi-line comment
+   Pwede multiple lines
+   Para sa longer explanations
+*/
+
+int age = 25;  // Age ng user
+
+/* 
+   TODO: Add input validation
+   FIXME: Bug sa calculation
+*/</div>
+        </div>
+        
+        <!-- Control Section -->
+        <div id="control" class="content-section">
+            <h2>🔀 Control Flow Structures</h2>
+            
+            <h3>If-Else Statement - Decision Making</h3>
+            <p>Ang if-else ay ginagamit para sa decision making - kung true ang condition, execute ang code:</p>
+            
+            <div class="code-block">int edad = 18;
+
+if (edad >= 18) {
+    printf("Pwede ka na bumoto!\n");
+    printf("Adult ka na!\n");
+} else {
+    printf("Hindi ka pa pwedeng bumoto.\n");
+    printf("Minor ka pa.\n");
+}
+
+// Multiple conditions with else if
+int grado = 85;
+
+if (grado >= 90) {
+    printf("Excellent! Grade: A\n");
+} else if (grado >= 80) {
+    printf("Very Good! Grade: B\n");
+} else if (grado >= 75) {
+    printf("Good! Grade: C\n");
+} else if (grado >= 70) {
+    printf("Fair! Grade: D\n");
+} else {
+    printf("Failed! Grade: F\n");
+}</div>
+            
+            <h3>Comparison Operators</h3>
+            <div class="info-box">
+                <strong>Operators para sa Conditions:</strong><br>
+                • <span class="highlight">==</span> - equal to (double equals!)<br>
+                • <span class="highlight">!=</span> - not equal to<br>
+                • <span class="highlight">&gt;</span> - greater than<br>
+                • <span class="highlight">&lt;</span> - less than<br>
+                • <span class="highlight">&gt;=</span> - greater than or equal<br>
+                • <span class="highlight">&lt;=</span> - less than or equal<br>
+                • <span class="highlight">&&</span> - logical AND<br>
+                • <span class="highlight">||</span> - logical OR<br>
+                • <span class="highlight">!</span> - logical NOT
+            </div>
+            
+            <h3>Step-by-Step: Grade Checker Program</h3>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    // Step 1: Declare variable
+    float grade;
+    
+    // Step 2: Get user input
+    printf("=== GRADE CHECKER ===\n");
+    printf("Enter your grade (0-100): ");
+    scanf("%f", &grade);
+    
+    // Step 3: Validate input
+    if (grade < 0 || grade > 100) {
+        printf("Error: Invalid grade!\n");
+        return 1;
+    }
+    
+    // Step 4: Display grade
+    printf("\nYour grade: %.2f\n", grade);
+    printf("Equivalent: ");
+    
+    // Step 5: Determine letter grade and remarks
+    if (grade >= 98) {
+        printf("A+ (Excellent!)\n");
+    } else if (grade >= 95) {
+        printf("A (Outstanding!)\n");
+    } else if (grade >= 90) {
+        printf("B+ (Very Good!)\n");
+    } else if (grade >= 85) {
+        printf("B (Good!)\n");
+    } else if (grade >= 80) {
+        printf("C+ (Satisfactory)\n");
+    } else if (grade >= 75) {
+        printf("C (Passed)\n");
+    } else if (grade >= 70) {
+        printf("D (Conditional)\n");
+    } else {
+        printf("F (Failed)\n");
+    }
+    
+    // Step 6: Show status
+    if (grade >= 75) {
+        printf("Status: PASSED ✓\n");
+    } else {
+        printf("Status: FAILED ✗\n");
+    }
+    
+    return 0;
+}</div>
+            
+            <h3>Logical Operators - Combining Conditions</h3>
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 20;
+    int grade = 85;
+    
+    // AND operator - both must be true
+    if (age >= 18 && grade >= 75) {
+        printf("Eligible for scholarship!\n");
+    }
+    
+    // OR operator - at least one must be true
+    if (age < 18 || grade < 75) {
+        printf("Need to meet requirements\n");
+    }
+    
+    // NOT operator - reverse the condition
+    if (!(age < 18)) {
+        printf("You are an adult\n");
+    }
+    
+    // Complex conditions
+    if ((age >= 18 && age <= 25) && (grade >= 85 || grade <= 100)) {
+        printf("Qualified for youth award!\n");
+    }
+    
+    return 0;
+}</div>
+            
+            <h3>Ternary Operator - Shorthand If-Else</h3>
+            <div class="code-block">int age = 20;
+
+// Normal if-else
+char* status;
+if (age >= 18) {
+    status = "Adult";
+} else {
+    status = "Minor";
+}
+
+// Ternary operator (shorthand)
+char* status2 = (age >= 18) ? "Adult" : "Minor";
+
+// More examples
+int a = 10, b = 20;
+int max = (a > b) ? a : b;  // Get maximum
+
+printf("Status: %s\n", status2);
+printf("Max: %d\n", max);</div>
+            
+            <h3>Switch Statement - Multiple Choice</h3>
+            <p>Ang switch ay mas maganda gamitin kaysa maraming if-else kung may fixed values lang:</p>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    int araw = 3;
+    
+    switch(araw) {
+        case 1:
+            printf("Lunes - Start of the week!\n");
+            break;
+        case 2:
+            printf("Martes\n");
+            break;
+        case 3:
+            printf("Miyerkules - Midweek!\n");
+            break;
+        case 4:
+            printf("Huwebes\n");
+            break;
+        case 5:
+            printf("Biyernes - Almost weekend!\n");
+            break;
+        case 6:
+            printf("Sabado - Weekend!\n");
+            break;
+        case 7:
+            printf("Linggo - Rest day!\n");
+            break;
+        default:
+            printf("Invalid day!\n");
+    }
+    
+    return 0;
+}</div>
+            
+            <div class="warning-box">
+                <strong>⚠️ Important sa Switch:</strong><br>
+                • Huwag kalimutan ang <span class="highlight">break</span> - kung wala, mag-continue sa next case<br>
+                • Ang <span class="highlight">default</span> ay optional pero recommended<br>
+                • Switch only works with int at char, hindi float<br>
+                • Each case must have a constant value
+            </div>
+            
+            <h3>Step-by-Step: Menu-Driven Program</h3>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    // Step 1: Declare variable
+    int choice;
+    float price = 0;
+    
+    // Step 2: Display menu
+    printf("=== PINOY CARINDERIA MENU ===\n");
+    printf("1. Tapsilog - 80 pesos\n");
+    printf("2. Chicken Adobo - 70 pesos\n");
+    printf("3. Sinigang na Baboy - 90 pesos\n");
+    printf("4. Pancit Canton - 60 pesos\n");
+    printf("5. Lumpia - 50 pesos\n");
+    printf("==========================\n");
+    printf("Enter your choice (1-5): ");
+    
+    // Step 3: Get user choice
+    scanf("%d", &choice);
+    
+    // Step 4: Process choice using switch
+    printf("\nYou ordered: ");
+    switch(choice) {
+        case 1:
+            printf("Tapsilog\n");
+            price = 80;
+            break;
+        case 2:
+            printf("Chicken Adobo\n");
+            price = 70;
+            break;
+        case 3:
+            printf("Sinigang na Baboy\n");
+            price = 90;
+            break;
+        case 4:
+            printf("Pancit Canton\n");
+            price = 60;
+            break;
+        case 5:
+            printf("Lumpia\n");
+            price = 50;
+            break;
+        default:
+            printf("Invalid choice!\n");
+            return 1;
+    }
+    
+    // Step 5: Display price
+    printf("Price: %.2f pesos\n", price);
+    printf("Salamat po!\n");
+    
+    return 0;
+}</div>
+            
+            <h3>For Loop - Pag-uulit ng Code</h3>
+            <p>Ang for loop ay ginagamit kung alam mo kung ilang beses mo gustong ulitin ang code:</p>
+            
+            <div class="code-block">// Basic for loop structure
+for (initialization; condition; increment) {
+    // code to repeat
+}
+
+// Print 1 to 10
+for (int i = 1; i <= 10; i++) {
+    printf("%d ", i);
+}
+printf("\n");
+
+// Countdown
+for (int i = 10; i >= 1; i--) {
+    printf("%d ", i);
+}
+printf("Blast off!\n");
+
+// Skip by 2 (even numbers)
+for (int i = 0; i <= 20; i += 2) {
+    printf("%d ", i);
+}</div>
+            
+            <h3>Step-by-Step: Multiplication Table Generator</h3>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    // Step 1: Declare variables
+    int number, i;
+    
+    // Step 2: Get number from user
+    printf("=== MULTIPLICATION TABLE ===\n");
+    printf("Enter a number: ");
+    scanf("%d", &number);
+    
+    // Step 3: Print table header
+    printf("\n=== Table of %d ===\n", number);
+    
+    // Step 4: Loop from 1 to 10
+    for (i = 1; i <= 10; i++) {
+        // Step 5: Calculate and display
+        int product = number * i;
+        printf("%d x %2d = %d\n", number, i, product);
+    }
+    
+    // Step 6: Extra - Sum of all products
+    int sum = 0;
+    for (i = 1; i <= 10; i++) {
+        sum += number * i;
+    }
+    printf("\nSum of all products: %d\n", sum);
+    
+    return 0;
+}</div>
+            
+            <h3>While Loop - Loop with Condition</h3>
+            <p>Ang while loop ay nag-eexecute habang true ang condition. Hindi mo kailangan alam exact count:</p>
+            
+            <div class="code-block">int bilang = 1;
+
+// Basic while loop
+while (bilang <= 5) {
+    printf("Bilang: %d\n", bilang);
+    bilang++;
+}
+
+// Password checker example
+char password[20];
+int tries = 0;
+int max_tries = 3;
+
+while (tries < max_tries) {
+    printf("Enter password: ");
+    scanf("%s", password);
+    
+    if (strcmp(password, "secret123") == 0) {
+        printf("✓ Correct password! Welcome!\n");
+        break;  // Exit loop
+    } else {
+        tries++;
+        printf("✗ Wrong password! %d tries left.\n", max_tries - tries);
+    }
+}
+
+if (tries == max_tries) {
+    printf("Account locked!\n");
+}</div>
+            
+            <h3>Step-by-Step: Number Guessing Game</h3>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;time.h&gt;
+
+int main() {
+    // Step 1: Initialize random number generator
+    srand(time(0));
+    int secret = rand() % 100 + 1;  // Random 1-100
+    int guess, attempts = 0;
+    int maxAttempts = 7;
+    
+    // Step 2: Display game instructions
+    printf("=== NUMBER GUESSING GAME ===\n");
+    printf("Hulaan ang numero mula 1-100\n");
+    printf("May %d attempts ka lang!\n\n", maxAttempts);
+    
+    // Step 3: Game loop
+    while (attempts < maxAttempts) {
+        // Step 4: Get user guess
+        printf("Attempt %d: Enter your guess: ", attempts + 1);
+        scanf("%d", &guess);
+        attempts++;
+        
+        // Step 5: Check guess and give hints
+        if (guess == secret) {
+            printf("\n🎉 TAMA! You got it in %d attempts!\n", attempts);
+            break;
+        } else if (guess < secret) {
+            printf("Too low! ");
+            if (secret - guess > 20) {
+                printf("(Hint: Malayo pa!)\n");
+            } else {
+                printf("(Hint: Malapit na!)\n");
+            }
+        } else {
+            printf("Too high! ");
+            if (guess - secret > 20) {
+                printf("(Hint: Malayo pa!)\n");
+            } else {
+                printf("(Hint: Malapit na!)\n");
+            }
+        }
+        
+        // Step 6: Show remaining attempts
+        if (attempts < maxAttempts) {
+            printf("%d attempts remaining\n\n", maxAttempts - attempts);
+        }
+    }
+    
+    // Step 7: Game over message
+    if (attempts == maxAttempts && guess != secret) {
+        printf("\n😢 Game Over! The answer was %d\n", secret);
+    }
+    
+    return 0;
+}</div>
+            
+            <h3>Do-While Loop</h3>
+            <p>Similar sa while pero guaranteed na at least once mag-execute ang code:</p>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    int choice;
+    float num1, num2, result;
+    
+    do {
+        // Display menu
+        printf("\n=== CALCULATOR MENU ===\n");
+        printf("1. Add\n");
+        printf("2. Subtract\n");
+        printf("3. Multiply\n");
+        printf("4. Divide\n");
+        printf("5. Exit\n");
+        printf("Choice: ");
+        scanf("%d", &choice);
+        
+        if (choice >= 1 && choice <= 4) {
+            printf("Enter two numbers: ");
+            scanf("%f %f", &num1, &num2);
+            
+            switch(choice) {
+                case 1:
+                    result = num1 + num2;
+                    printf("Result: %.2f\n", result);
+                    break;
+                case 2:
+                    result = num1 - num2;
+                    printf("Result: %.2f\n", result);
+                    break;
+                case 3:
+                    result = num1 * num2;
+                    printf("Result: %.2f\n", result);
+                    break;
+                case 4:
+                    if (num2 != 0) {
+                        result = num1 / num2;
+                        printf("Result: %.2f\n", result);
+                    } else {
+                        printf("Error: Division by zero!\n");
+                    }
+                    break;
+            }
+        }
+        
+    } while (choice != 5);
+    
+    printf("Thank you for using calculator!\n");
+    return 0;
+}</div>
+            
+            <div class="tip-box">
+                <strong>💡 Kapag Gumamit ng Loops:</strong><br>
+                • Siguraduhing may ending condition para hindi infinite loop<br>
+                • Gumamit ng <span class="highlight">break</span> para lumabas ng loop<br>
+                • Gumamit ng <span class="highlight">continue</span> para skip current iteration<br>
+                • For loop - alam mo count | While - hindi alam exact count | Do-while - guaranteed at least once
+            </div>
+            
+            <h3>Nested Loops - Loop inside Loop</h3>
+            <p>Pwede kang maglagay ng loop sa loob ng another loop:</p>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    // Example 1: Print pattern
+    printf("Triangle Pattern:\n");
+    for (int i = 1; i <= 5; i++) {
+        for (int j = 1; j <= i; j++) {
+            printf("* ");
+        }
+        printf("\n");
+    }
+    
+    // Example 2: Multiplication table (1-5)
+    printf("\nMultiplication Table:\n");
+    for (int i = 1; i <= 5; i++) {
+        for (int j = 1; j <= 5; j++) {
+            printf("%2d ", i * j);
+        }
+        printf("\n");
+    }
+    
+    // Example 3: Box pattern
+    printf("\nBox Pattern:\n");
+    for (int i = 1; i <= 4; i++) {
+        for (int j = 1; j <= 6; j++) {
+            printf("# ");
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}</div>
+            
+            <div class="output-box">
+                <strong>Output:</strong><br>
+                Triangle Pattern:<br>
+                *<br>
+                * *<br>
+                * * *<br>
+                * * * *<br>
+                * * * * *
+            </div>
+            
+            <h3>Break at Continue Statements</h3>
+            <div class="code-block">// Break - exit loop immediately
+for (int i = 1; i <= 10; i++) {
+    if (i == 5) {
+        break;  // Stop loop at 5
+    }
+    printf("%d ", i);
+}
+// Output: 1 2 3 4
+
+// Continue - skip current iteration
+for (int i = 1; i <= 10; i++) {
+    if (i % 2 == 0) {
+        continue;  // Skip even numbers
+    }
+    printf("%d ", i);
+}
+// Output: 1 3 5 7 9</div>
+        </div>
+        
+        <!-- Functions Section -->
+        <div id="functions" class="content-section">
+            <h2>⚙️ Functions</h2>
+            
+            <h3>Ano ang Functions?</h3>
+            <p>Ang functions ay blocks ng code na may specific purpose at pwedeng gamitin paulit-ulit. Parang recipes - may pangalan, ingredients (parameters), at result (return value).</p>
+            
+            <div class="info-box">
+                <strong>Benefits ng Functions:</strong><br>
+                • Code reusability - hindi paulit-ulit ang code<br>
+                • Mas organized at readable<br>
+                • Easier debugging at maintenance<br>
+                • Divide and conquer - complex problems → simple parts<br>
+                • Team collaboration - different people work on different functions
+            </div>
+            
+            <h3>Function Structure</h3>
+            <div class="code-block">// Function syntax:
+return_type function_name(parameter_list) {
+    // function body
+    return value;
+}
+
+// Example: Simple function
+int add(int x, int y) {
+    int sum = x + y;
+    return sum;
+}
+
+int main() {
+    int result = add(5, 3);
+    printf("Sum: %d\n", result);  // Output: 8
+    return 0;
+}</div>
+            
+            <h3>Step-by-Step: Creating Functions</h3>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+// Step 1: Function declarations (prototypes)
+int multiply(int a, int b);
+float divide(float a, float b);
+void greet(char name[]);
+void displayMenu();
+
+// Step 2: Main function
+int main() {
+    // Step 3: Call functions
+    int product = multiply(5, 3);
+    printf("5 x 3 = %d\n", product);
+    
+    float quotient = divide(10.0, 3.0);
+    printf("10 / 3 = %.2f\n", quotient);
+    
+    greet("Maria");
+    displayMenu();
+    
+    return 0;
+}
+
+// Step 4: Function definitions
+int multiply(int a, int b) {
+    return a * b;
+}
+
+float divide(float a, float b) {
+    if (b != 0) {
+        return a / b;
+    }
+    printf("Error: Division by zero!\n");
+    return 0;
+}
+
+void greet(char name[]) {
+    printf("Hello, %s! Kamusta ka?\n", name);
+}
+
+void displayMenu() {
+    printf("\n=== MENU ===\n");
+    printf("1. Option 1\n");
+    printf("2. Option 2\n");
+    printf("3. Exit\n");
+}</div>
+            
+            <h3>Types ng Functions</h3>
+            
+            <div class="code-block">// 1. No parameters, no return
+void sayHello() {
+    printf("Hello, World!\n");
+}
+
+// 2. With parameters, no return
+void printSum(int a, int b) {
+    printf("Sum: %d\n", a + b);
+}
+
+// 3. No parameters, with return
+int getNumber() {
+    return 42;
+}
+
+// 4. With parameters, with return
+int max(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+int main() {
+    sayHello();
+    printSum(5, 3);
+    int num = getNumber();
+    int maximum = max(10, 20);
+    return 0;
+}</div>
+            
+            <h3>Step-by-Step: Complete Calculator with Functions</h3>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+// Function prototypes
+float add(float a, float b);
+float subtract(float a, float b);
+float multiply(float a, float b);
+float divide(float a, float b);
+void displayMenu();
+void displayResult(float result, char op);
+
+int main() {
+    float num1, num2, result;
+    int choice;
+    char operator;
+    
+    do {
+        // Display menu
+        displayMenu();
+        scanf("%d", &choice);
+        
+        if (choice >= 1 && choice <= 4) {
+            // Get numbers
+            printf("Enter first number: ");
+            scanf("%f", &num1);
+            printf("Enter second number: ");
+            scanf("%f", &num2);
+            
+            // Perform operation
+            switch(choice) {
+                case 1:
+                    result = add(num1, num2);
+                    operator = '+';
+                    break;
+                case 2:
+                    result = subtract(num1, num2);
+                    operator = '-';
+                    break;
+                case 3:
+                    result = multiply(num1, num2);
+                    operator = '*';
+                    break;
+                case 4:
+                    result = divide(num1, num2);
+                    operator = '/';
+                    break;
+            }
+            
+            // Display result
+            printf("%.2f %c %.2f = %.2f\n", num1, operator, num2, result);
+        }
+    } while (choice != 5);
+    
+    printf("Thank you!\n");
+    return 0;
+}
+
+void displayMenu() {
+    printf("\n=== CALCULATOR ===\n");
+    printf("1. Add\n");
+    printf("2. Subtract\n");
+    printf("3. Multiply\n");
+    printf("4. Divide\n");
+    printf("5. Exit\n");
+    printf("Choice: ");
+}
+
+float add(float a, float b) {
+    return a + b;
+}
+
+float subtract(float a, float b) {
+    return a - b;
+}
+
+float multiply(float a, float b) {
+    return a * b;
+}
+
+float divide(float a, float b) {
+    if (b == 0) {
+        printf("Error: Division by zero!\n");
+        return 0;
+    }
+    return a / b;
+}</div>
+            
+            <h3>Recursion - Function Calling Itself</h3>
+            <p>Ang recursion ay technique kung saan tumatawag ang function sa sarili niya:</p>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+// Recursive factorial
+int factorial(int n) {
+    if (n == 0 || n == 1) {
+        return 1;  // Base case
+    }
+    return n * factorial(n - 1);  // Recursive call
+}
+
+// Iterative factorial (for comparison)
+int factorialIterative(int n) {
+    int result = 1;
+    for (int i = 2; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+
+// Fibonacci sequence
+int fibonacci(int n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fibonacci(n-1) + fibonacci(n-2);
+}
+
+int main() {
+    printf("Factorial of 5: %d\n", factorial(5));
+    
+    printf("Fibonacci series (0-9): ");
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", fibonacci(i));
+    }
+    printf("\n");
+    
+    return 0;
+}</div>
+            
+            <div class="warning-box">
+                <strong>⚠️ Recursion Tips:</strong><br>
+                • Always have a BASE CASE para hindi infinite recursion<br>
+                • Recursion uses more memory - stack overflow possible<br>
+                • Hindi lahat ng problems ay mas maganda sa recursion<br>
+                • Iterative solution is usually faster
+            </div>
+            
+            <h3>Pass by Value vs Pass by Reference</h3>
+            <div class="code-block">// Pass by value - copy of value
+void changeValue(int x) {
+    x = 100;  // Changes local copy only
+}
+
+// Pass by reference - using pointers
+void changeValueRef(int *x) {
+    *x = 100;  // Changes original variable
+}
+
+int main() {
+    int num = 50;
+    
+    changeValue(num);
+    printf("After pass by value: %d\n", num);  // Still 50
+    
+    changeValueRef(&num);
+    printf("After pass by reference: %d\n", num);  // Now 100
+    
+    return 0;
+}</div>
+        </div>
+        
+        <!-- Arrays Section -->
+        <div id="arrays" class="content-section">
+            <h2>📊 Arrays</h2>
+            
+            <h3>Ano ang Array?</h3>
+            <p>Ang array ay collection ng same data type stored sa contiguous memory. Parang filing cabinet na may numbered drawers (indexes).</p>
+            
+            <div class="code-block">// Declare array ng 5 integers
+int grades[5];
+
+// Initialize array with values
+int numbers[5] = {10, 20, 30, 40, 50};
+
+// Partial initialization
+int arr[5] = {1, 2};  // Rest are 0
+
+// Automatic size
+int values[] = {5, 10, 15, 20};  // Size is 4
+
+// Access elements (index starts at 0)
+printf("First: %d\n", numbers[0]);   // 10
+printf("Third: %d\n", numbers[2]);   // 30
+printf("Last: %d\n", numbers[4]);    // 50
+
+// Modify element
+numbers[1] = 25;
+printf("Second: %d\n", numbers[1]);  // 25</div>
+            
+            <div class="info-box">
+                <strong>Array Facts:</strong><br>
+                • Index starts at 0 (zero-based indexing)<br>
+                • Size must be constant (cannot change after declaration)<br>
+                • Array name is actually a pointer to first element<br>
+                • Adjacent memory locations - fast access<br>
+                • Bounds are not checked - be careful with index!
+            </div>
+            
+            <h3>Step-by-Step: Student Grade System</h3>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    // Step 1: Declare array and variables
+    int grades[5];
+    int sum = 0;
+    float average;
+    int highest, lowest;
+    
+    // Step 2: Input grades
+    printf("=== STUDENT GRADE SYSTEM ===\n");
+    printf("Enter 5 student grades:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Student %d: ", i+1);
+        scanf("%d", &grades[i]);
+        
+        // Validate input
+        while (grades[i] < 0 || grades[i] > 100) {
+            printf("Invalid! Enter again (0-100): ");
+            scanf("%d", &grades[i]);
+        }
+    }
+    
+    // Step 3: Calculate sum
+    for (int i = 0; i < 5; i++) {
+        sum += grades[i];
+    }
+    
+    // Step 4: Calculate average
+    average = sum / 5.0;
+    
+    // Step 5: Find highest and lowest
+    highest = lowest = grades[0];
+    for (int i = 1; i < 5; i++) {
+        if (grades[i] > highest) {
+            highest = grades[i];
+        }
+        if (grades[i] < lowest) {
+            lowest = grades[i];
+        }
+    }
+    
+    // Step 6: Display results
+    printf("\n=== RESULTS ===\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Student %d: %d\n", i+1, grades[i]);
+    }
+    printf("Sum: %d\n", sum);
+    printf("Average: %.2f\n", average);
+    printf("Highest: %d\n", highest);
+    printf("Lowest: %d\n", lowest);
+    
+    // Step 7: Count passed/failed
+    int passed = 0, failed = 0;
+    for (int i = 0; i < 5; i++) {
+        if (grades[i] >= 75) {
+            passed++;
+        } else {
+            failed++;
+        }
+    }
+    printf("Passed: %d\n", passed);
+    printf("Failed: %d\n", failed);
+    
+    return 0;
+}</div>
+            
+            <h3>Character Arrays (Strings)</h3>
+            <p>Sa C, walang built-in string type. Ginagamit natin ang array of characters:</p>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    // String declaration
+    char name[20] = "Maria";
+    char message[] = "Hello World";
+    char greeting[50];
+    
+    // Input string
+    printf("Enter your name: ");
+    scanf("%s", greeting);  // Stops at space
+    
+    // Input with spaces
+    printf("Enter full name: ");
+    scanf(" %[^\n]", greeting);  // Reads until newline
+    
+    // String functions
+    char str1[50] = "Hello";
+    char str2[] = " World";
+    
+    // Concatenate (join)
+    strcat(str1, str2);
+    printf("%s\n", str1);  // Hello World
+    
+    // Length
+    int len = strlen(str1);
+    printf("Length: %d\n", len);
+    
+    // Copy
+    char copy[50];
+    strcpy(copy, str1);
+    printf("Copy: %s\n", copy);
+    
+    // Compare
+    if (strcmp(str1, copy) == 0) {
+        printf("Strings are equal\n");
+    }
+    
+    return 0;
+}</div>
+            
+            
+            <h3>Step-by-Step: String Operations</h3>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;
+
+int main() {
+    // Step 1: Declare strings
+    char firstName[50], lastName[50], fullName[100];
+    char email[100];
+    
+    // Step 2: Get input
+    printf("Enter first name: ");
+    scanf("%s", firstName);
+    printf("Enter last name: ");
+    scanf("%s", lastName);
+    
+    // Step 3: Create full name
+    strcpy(fullName, firstName);
+    strcat(fullName, " ");
+    strcat(fullName, lastName);
+    
+    // Step 4: Convert to uppercase
+    char upperName[100];
+    strcpy(upperName, fullName);
+    for (int i = 0; upperName[i]; i++) {
+        upperName[i] = toupper(upperName[i]);
+    }
+    
+    // Step 5: Create email
+    strcpy(email, firstName);
+    strcat(email, ".");
+    strcat(email, lastName);
+    strcat(email, "@email.com");
+    
+    // Convert email to lowercase
+    for (int i = 0; email[i]; i++) {
+        email[i] = tolower(email[i]);
+    }
+    
+    // Step 6: Display results
+    printf("\n=== RESULTS ===\n");
+    printf("Full name: %s\n", fullName);
+    printf("Uppercase: %s\n", upperName);
+    printf("Email: %s\n", email);
+    printf("Name length: %d characters\n", strlen(fullName));
+    
+    return 0;
+}</div>
+            
+            <h3>2D Arrays - Array ng Arrays</h3>
+            <p>Ang 2D array ay parang table o grid - may rows at columns:</p>
+            
+            <div class="code-block">// 3x3 matrix
+int matrix[3][3] = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+
+// Access elements
+printf("%d\n", matrix[0][0]);  // 1 (row 0, col 0)
+printf("%d\n", matrix[1][2]);  // 6 (row 1, col 2)
+printf("%d\n", matrix[2][1]);  // 8 (row 2, col 1)
+
+// Loop through 2D array
+for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+        printf("%d ", matrix[i][j]);
+    }
+    printf("\n");
+}</div>
+            
+            <h3>Sorting Arrays - Bubble Sort</h3>
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[5] = {64, 34, 25, 12, 22};
+    int n = 5;
+    
+    printf("Before sorting: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    
+    // Bubble sort algorithm
+    for (int i = 0; i < n-1; i++) {
+        for (int j = 0; j < n-i-1; j++) {
+            if (arr[j] > arr[j+1]) {
+                // Swap elements
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+    
+    printf("\nAfter sorting: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    
+    return 0;
+}</div>
+        </div>
+        
+        <!-- Pointers Section -->
+        <div id="pointers" class="content-section">
+            <h2>👉 Pointers</h2>
+            
+            <h3>Ano ang Pointer?</h3>
+            <p>Ang pointer ay special variable na nag-store ng memory address ng ibang variable. Ito ay powerful at dangerous feature ng C!</p>
+            
+            <div class="code-block">int number = 42;
+int *ptr;  // pointer declaration
+
+ptr = &number;  // store address ng number
+
+printf("Value: %d\n", number);         // 42
+printf("Address: %p\n", &number);      // memory address
+printf("Ptr stores: %p\n", ptr);       // same address
+printf("Value via ptr: %d\n", *ptr);   // 42 (dereferencing)</div>
+            
+            <div class="tip-box">
+                <strong>Important Symbols:</strong><br>
+                • <span class="highlight">*</span> sa declaration (int *ptr) = pointer type<br>
+                • <span class="highlight">&</span> = address-of operator (get address)<br>
+                • <span class="highlight">*</span> sa code (*ptr) = dereference (get value at address)
+            </div>
+            
+            <h3>Practical Example: Swap Function</h3>
+            <div class="code-block">void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+    int x = 5, y = 10;
+    
+    printf("Before swap: x=%d, y=%d\n", x, y);
+    swap(&x, &y);
+    printf("After swap: x=%d, y=%d\n", x, y);
+    
+    return 0;
+}</div>
+        </div>
+        
+        <!-- Structures Section -->
+        <div id="structures" class="content-section">
+            <h2>🏗️ Structures</h2>
+            
+            <h3>Ano ang Structure?</h3>
+            <p>Ang structure ay user-defined data type na pwedeng mag-combine ng different data types into one unit. Parang custom na template.</p>
+            
+            <div class="code-block">// Define structure
+struct Student {
+    char name[50];
+    int age;
+    float grade;
+};
+
+int main() {
+    // Create structure variable
+    struct Student student1;
+    
+    // Assign values
+    strcpy(student1.name, "Juan Dela Cruz");
+    student1.age = 20;
+    student1.grade = 95.5;
+    
+    // Display
+    printf("Name: %s\n", student1.name);
+    printf("Age: %d\n", student1.age);
+    printf("Grade: %.2f\n", student1.grade);
+    
+    return 0;
+}</div>
+        </div>
+        
+        <!-- Files Section -->
+        <div id="files" class="content-section">
+            <h2>📁 File Handling</h2>
+            
+            <h3>Ano ang File Handling?</h3>
+            <p>Ang file handling ay process ng pag-create, read, write, at close ng files. Para permanent ang data storage.</p>
+            
+            <div class="code-block">FILE *fp;
+fp = fopen("output.txt", "w");
+
+if (fp == NULL) {
+    printf("Error opening file!\n");
+    return 1;
+}
+
+fprintf(fp, "Hello, World!\n");
+fclose(fp);</div>
+        </div>
+        
+        <!-- Projects Section -->
+        <div id="projects" class="content-section">
+            <h2>🚀 Complete Projects</h2>
+            
+            <h3>Project 1: Simple Calculator</h3>
+            
+            <div class="code-block">#include &lt;stdio.h&gt;
+
+int main() {
+    float num1, num2;
+    char op;
+    
+    printf("Enter calculation (e.g., 5 + 3): ");
+    scanf("%f %c %f", &num1, &op, &num2);
+    
+    switch(op) {
+        case '+':
+            printf("Result: %.2f\n", num1 + num2);
+            break;
+        case '-':
+            printf("Result: %.2f\n", num1 - num2);
+            break;
+        case '*':
+            printf("Result: %.2f\n", num1 * num2);
+            break;
+        case '/':
+            if (num2 != 0) {
+                printf("Result: %.2f\n", num1 / num2);
+            } else {
+                printf("Error: Division by zero!\n");
+            }
+            break;
+        default:
+            printf("Invalid operator!\n");
+    }
+    
+    return 0;
+}</div>
+            
+            <div class="tip-box">
+                <strong>🎯 Practice Tips:</strong><br>
+                • Try to understand each line ng code<br>
+                • Modify programs to add features<br>
+                • Debug errors patiently<br>
+                • Create your own projects!<br>
+                • Share your code with others for feedback
+            </div>
+            
+            <h3>Congratulations! 🎉</h3>
+            <p>Tapos mo na ang complete guide sa C Programming! Continue practicing at building projects para mas gumaling ka pa.</p>
+        </div>
+        
+        <footer>
+            <p>💻 Made with ❤️ for Filipino C Programmers</p>
+            <p>Keep coding! Kaya mo yan! 🚀</p>
+        </footer>
+    </div>
+    
+    <script>
+        (function() {
+            var currentTab = 'intro';
+            var tabs = ['intro', 'basics', 'control', 'functions', 'arrays', 'pointers', 'structures', 'files', 'projects'];
+            
+            function showTab(tabName) {
+                var sections = document.querySelectorAll('.content-section');
+                for (var i = 0; i < sections.length; i++) {
+                    sections[i].classList.remove('active');
+                }
+                
+                var buttons = document.querySelectorAll('.tab-btn');
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].classList.remove('active');
+                }
+                
+                var section = document.getElementById(tabName);
+                if (section) {
+                    section.classList.add('active');
+                }
+                
+                var activeButton = document.querySelector('[data-tab="' + tabName + '"]');
+                if (activeButton) {
+                    activeButton.classList.add('active');
+                }
+                
+                currentTab = tabName;
+                updateProgress();
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            function updateProgress() {
+                var tabIndex = -1;
+                for (var i = 0; i < tabs.length; i++) {
+                    if (tabs[i] === currentTab) {
+                        tabIndex = i;
+                        break;
+                    }
+                }
+                
+                if (tabIndex !== -1) {
+                    var progress = ((tabIndex + 1) / tabs.length) * 100;
+                    var progressBar = document.getElementById('progressBar');
+                    if (progressBar) {
+                        progressBar.style.width = progress + '%';
+                    }
+                }
+            }
+            
+            var navTabs = document.getElementById('navTabs');
+            if (navTabs) {
+                navTabs.addEventListener('click', function(e) {
+                    if (e.target && e.target.classList.contains('tab-btn')) {
+                        var tabName = e.target.getAttribute('data-tab');
+                        if (tabName) {
+                            showTab(tabName);
+                        }
+                    }
+                });
+            }
+            
+            updateProgress();
+        })();
+    </script>
+</body>
+</html>
